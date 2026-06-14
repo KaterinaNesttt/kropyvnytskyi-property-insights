@@ -80,7 +80,7 @@ export const AppSidebar = React.memo(function AppSidebar({
   }, [navigate, onLogout]);
 
   const visibleNav = React.useMemo(() => {
-    return nav.filter((item) => !item.roles || item.roles.includes(user.role));
+    return nav.filter((item) => user.role === "superuser" || !item.roles || item.roles.includes(user.role));
   }, [nav, user.role]);
 
   return (

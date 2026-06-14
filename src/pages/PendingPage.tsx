@@ -10,7 +10,8 @@ export function PendingPage() {
 
   useEffect(() => {
     if (!loading && !user) navigate("/auth", { replace: true });
-    if (user?.status === "approved")
+    if (user?.role === "superuser") navigate("/dashboard", { replace: true });
+    else if (user?.status === "approved")
       navigate(user.role === "user" ? "/analytics" : "/dashboard", { replace: true });
   }, [user, loading, navigate]);
 

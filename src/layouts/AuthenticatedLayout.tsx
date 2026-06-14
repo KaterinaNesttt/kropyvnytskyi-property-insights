@@ -55,7 +55,8 @@ export function AuthenticatedLayout() {
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/auth", { replace: true });
-    else if (user.status !== "approved") navigate("/pending", { replace: true });
+    else if (user.role !== "superuser" && user.status !== "approved")
+      navigate("/pending", { replace: true });
   }, [user, loading, navigate]);
 
   useEffect(() => {
@@ -109,7 +110,7 @@ export function AuthenticatedLayout() {
       });
   }, [user, online, queueCount, syncing, queryClient]);
 
-  if (loading || !user || user.status !== "approved") {
+  if (loading || !user || (user.role !== "superuser" && user.status !== "approved")) {
     return (
       <div className="min-h-screen flex items-center justify-center text-muted-foreground">
         Завантаження…
