@@ -63,20 +63,21 @@ const PALETTE = [
    ═══════════════════════════════════════════ */
 
 const DISTRICT_POS: Record<string, { x: number; y: number }> = {
-  Центр: { x: 48, y: 42 },
+  Центр: { x: 55, y: 53 },
   Балашівка: { x: 30, y: 60 },
   "Нова Балашівка": { x: 28, y: 48 },
   Завадівка: { x: 55, y: 72 },
   Олексіївка: { x: 62, y: 38 },
   Арнаутове: { x: 58, y: 62 },
   Лелеківка: { x: 60, y: 22 },
-  Попова: { x: 42, y: 18 },
-  Жадова: { x: 35, y: 28 },
+  Попова: { x: 28, y: 61 },
+  Жадова: { x: 23, y: 63 },
+  Миколаївка: { x: 69, y: 34 },
   Маслениківка: { x: 22, y: 52 },
   Бєляєва: { x: 48, y: 58 },
   Ковалівка: { x: 48, y: 12 },
   Фортечна: { x: 45, y: 50 },
-  Кущівка: { x: 68, y: 42 },
+  Кущівка: { x: 83, y: 54 },
   "Велика Балка": { x: 58, y: 48 },
   Шкільна: { x: 40, y: 35 },
   Озерна: { x: 52, y: 32 },
@@ -353,8 +354,8 @@ function SaleTermBarsCard({ data }: { data: ChartItem[] }) {
               fontSize={11}
               axisLine={false}
               tickLine={false}
-              tickFormatter={(v: string) => shortLbl(String(v), 8)}
-              interval={0}
+              tickFormatter={(v: string) => formatSaleTermTick(String(v))}
+              interval="preserveStartEnd"
             />
             <YAxis
               stroke="var(--color-muted-foreground)"
@@ -669,6 +670,10 @@ function shortLbl(v: string, max = 14): string {
   return v.length > max ? `${v.slice(0, max - 1)}…` : v;
 }
 
+function formatSaleTermTick(value: string): string {
+  return value.replace(/місяців|місяці|місяць|міс\.?/gi, "").replace(/\s+/g, "");
+}
+
 function priceAxisTicks(
   data: Array<PricePoint & { initialPrice: number; finalPrice: number }>,
 ): number[] {
@@ -710,9 +715,9 @@ function centerPeakRows(data: ChartItem[]): ChartItem[] {
 function mergeDuplicateRows(data: ChartItem[]): ChartItem[] {
   const merged = new Map<string, ChartItem>();
   data.forEach((item) => {
-    const label = String(item.label).trim().replace(/\s+/g, " ");
+    const label = canonicalDistrictLabel(String(item.label));
     if (!label) return;
-    const key = label.toLowerCase();
+    const key = districtCompareKey(label);
     const existing = merged.get(key);
     if (existing) {
       existing.value += item.value;
@@ -721,6 +726,29 @@ function mergeDuplicateRows(data: ChartItem[]): ChartItem[] {
     }
   });
   return Array.from(merged.values());
+}
+
+function canonicalDistrictLabel(label: string): string {
+  const cleanLabel = label
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/^(вулиця|вул\.?)\s*/i, "")
+    .replace(/\s+(мікрорайон|мр\.?|м-н)$/i, "")
+    .trim();
+  const key = districtCompareKey(label);
+  if (key === "101") return "101-й мікрорайон";
+  return cleanLabel;
+}
+
+function districtCompareKey(label: string): string {
+  return label
+    .toLocaleLowerCase("uk-UA")
+    .replace(/(?:^|\s)(вулиця|вул\.?)\s*/gi, " ")
+    .replace(/(?:^|\s)(мікрорайон|мр\.?|м-н)(?=\s|$)/gi, " ")
+    .replace(/(\d)-?й(?=\s|$)/gi, "$1")
+    .replace(/[^0-9a-zа-яіїєґ]+/gi, " ")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 function stableScatterRows(data: ChartItem[]): ChartItem[] {
