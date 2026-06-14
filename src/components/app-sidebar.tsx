@@ -44,7 +44,7 @@ const SidebarNavItem = React.memo(function SidebarNavItem({
         "flex min-h-11 w-full items-center gap-2 px-4 text-sm font-medium",
         "transition-colors duration-150 active:scale-[0.99]",
         active
-          ? " glass-outpress-edge rounded-[0.8rem] text-sidebar-primary-foreground"
+          ? "asset-active-pill rounded-[0.8rem] text-sidebar-primary-foreground"
           : "text-sidebar-foreground hover:text-sidebar-accent-foreground",
       )}
     >
