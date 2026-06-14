@@ -42,7 +42,7 @@ export function SalesListPage() {
 
   return (
     <PageShell>
-      <PageHeader title="Продажі" />
+      <PageHeader title="" />
 
       <div className="mb-4 hidden items-center justify-between gap-3 rounded-md border border-white/10 bg-black/55 px-4 py-3 shadow-[0_8px_18px_rgba(0,0,0,0.16)] md:flex">
         <div>

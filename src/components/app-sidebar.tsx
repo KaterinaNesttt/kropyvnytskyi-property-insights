@@ -113,7 +113,7 @@ export const AppSidebar = React.memo(function AppSidebar({
       <div className="shrink-0 space-y-3  p-4">
         <Button asChild className="px-4 py-3 text-sm w-full justify-between text-sidebar-foreground/76">
           <div>
-          <div className="truncate  font-medium text-sidebar-foreground">{userTitle}</div>
+          <div className="truncate font-medium text-sidebar-foreground">{userTitle}</div>
           <Button
             type="button"
             variant="outline"

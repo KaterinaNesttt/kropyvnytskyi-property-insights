@@ -84,11 +84,11 @@ export function NewSalePage() {
               onChange={(v) => u("initial_price", v)}
             />
             <FieldNum
-              label="Продаж ціна"
+              label="Ціна продажу"
               value={f.final_price}
               onChange={(v) => u("final_price", v)}
             />
-            <Field label="Характеристика" className="md:col-span-3">
+            <Field label="Характеристики" className="md:col-span-3">
               <Textarea
                 value={f.characteristics ?? ""}
                 onChange={(e) => u("characteristics", e.target.value)}
@@ -105,12 +105,12 @@ export function NewSalePage() {
           </CardContent>
         </Card>
 
-        <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={() => navigate("/sales")}>
+        <div className="flex justify-between gap-2">
+          <Button type="button" className="w-full" variant="outline" onClick={() => navigate("/sales")}>
             Скасувати
           </Button>
-          <Button type="submit" disabled={busy}>
-            {busy ? "..." : "Відправити на перевірку"}
+          <Button type="submit" className="w-full" disabled={busy}>
+            {busy ? "..." : "Відправити"}
           </Button>
         </div>
       </form>

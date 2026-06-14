@@ -41,9 +41,9 @@ export function MobileBottomBar({
       <button
         type="button"
         onClick={onOpenSidebar}
-        className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-lg px-1 text-[10px] leading-none text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+        className="flex min-h-14 flex-col items-center justify-center gap-1.5 rounded-lg px-1 text-[10px] leading-none text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
       >
-        <Menu className="h-6 w-6" />
+        <Menu className="h-7 w-7 text-sidebar-foreground" />
         <span>Меню</span>
       </button>
     </nav>

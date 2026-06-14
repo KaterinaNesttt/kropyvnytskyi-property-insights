@@ -54,20 +54,12 @@ export function AnalyticsPage() {
 
   return (
     <PageShell>
-      <PageHeader title="Аналітика">
-        <Button
-          variant={filtersOpen ? "default" : "outline"}
-          size="sm"
-          className="surface-upgrade border-0 text-foreground shadow-none hover:text-primary-foreground"
-          onClick={() => setFiltersOpen((v) => !v)}
-        >
-          <SlidersHorizontal className="h-4 w-4 mr-1" />
-          Фільтр
-        </Button>
+      <PageHeader title="">
+
       </PageHeader>
 
       {filtersOpen && (
-        <Card className="surface-secondary glass-edge inset-surface mb-5 rounded-[1.25rem] p-4">
+        <Card className="glass-edge inset-surface mb-5 rounded-[1.25rem] p-4">
           <FiltersBar value={filters} onChange={setFilters} frameless />
         </Card>
       )}
@@ -87,8 +79,9 @@ export function AnalyticsPage() {
             <Card className="overflow-hidden">
               <CardContent className="p-5 md:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-4">
+
                   <div>
-                    <div className="text-sm text-muted-foreground">Поточна вибірка</div>
+                                      
                     <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-2">
                       <span className="text-5xl font-semibold tabular-nums">
                         {fmtNumber(data.total)}
@@ -97,18 +90,17 @@ export function AnalyticsPage() {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {data.activeFilterLabels.length ? (
-                      data.activeFilterLabels.map((label) => (
-                        <Badge key={label} variant="secondary" className="rounded-md">
-                          {label}
-                        </Badge>
-                      ))
-                    ) : (
-                      <Badge variant="secondary" className="rounded-md">
-                        Усі дані
-                      </Badge>
-                    )}
+
                   </div>
+                                            <Button
+          variant={filtersOpen ? "default" : "outline"}
+          size="sm"
+          className="border-0 text-foreground shadow-none hover:text-primary-foreground"
+          onClick={() => setFiltersOpen((v) => !v)}
+        >
+          <SlidersHorizontal className="h-4 w-4 mr-1" />
+          Фільтр
+        </Button>
                 </div>
                 <div className="mt-6 grid gap-3 sm:grid-cols-3">
                   <SummaryCell label="Медіанна ціна" value={fmtMoney(data.medianPrice)} />
